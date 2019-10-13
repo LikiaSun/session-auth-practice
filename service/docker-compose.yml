@@ -1,19 +1,22 @@
-version: "3"
+version: "3.7"
+
 services:
   session_mongodb:
     image: mongo:3.6
-    networks:
-      - session_network
+    container_name: session_mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: session
     ports:
       - "27017:27017"
-
-  session_mongo-seed:
-    build: ./mongo-seed
     networks:
       - session_network
-    links:
-      - session_mongodb
+    volumes:
+      - ./mongodb:/data/db
 
 networks:
   session_network:
+    name: session_network
     driver: bridge
