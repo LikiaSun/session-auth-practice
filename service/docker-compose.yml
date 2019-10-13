@@ -1,0 +1,19 @@
+version: "3"
+services:
+  session_mongodb:
+    image: mongo:3.6
+    networks:
+      - session_network
+    ports:
+      - "27017:27017"
+
+  session_mongo-seed:
+    build: ./mongo-seed
+    networks:
+      - session_network
+    links:
+      - session_mongodb
+
+networks:
+  session_network:
+    driver: bridge
